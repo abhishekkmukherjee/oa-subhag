@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: openoa-ai-dashboard
+    env: python
+    buildCommand: |
+      pip install -e .
+      pip install -r requirements_dashboard.txt
+      cd examples && unzip -o la_haute_borne.zip -d data/la_haute_borne/ || echo "Data already extracted"
+    startCommand: streamlit run dashboard.py --server.port $PORT --server.address 0.0.0.0
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+    plan: starter
